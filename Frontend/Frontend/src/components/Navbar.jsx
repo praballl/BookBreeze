@@ -43,7 +43,7 @@ function Navbar() {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/course">Course</Link>
+        <Link to="/course">Books</Link>
       </li>
       <li>
       <Link to="/contact">Contact</Link>
@@ -87,7 +87,7 @@ function Navbar() {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52 bg-slate-300 dark:bg-slate-700"
               >
                 {navItems}
               </ul>
