@@ -7,7 +7,8 @@ import About from "./components/About";
 import Signup from "./components/Signup";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./context/AuthProvider";
-
+import EmailVerification from "./components/EmailVerification";
+import SendEmailForResetPass from './components/SendEmailForResetPass'
 
 function App() {
   const [authUser, setAuthUser] = useAuth();
@@ -19,6 +20,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/password-reset-request" element={<SendEmailForResetPass />} />
+          <Route path="/user/:id/verify/:token" element={<EmailVerification />} />
           <Route
             path="/course"
             element={authUser ? <Courses /> : <Navigate to="/signup" />}

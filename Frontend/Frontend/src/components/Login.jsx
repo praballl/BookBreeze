@@ -1,9 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+
+
+
 function Login() {
+
+
+ 
   const {
     register,
     handleSubmit,
@@ -15,10 +21,13 @@ function Login() {
       email: data.email,
       password: data.password,
     };
+    // console.log("user email",userInfo.email);
+    // console.log("user password",userInfo.password);
+
     await axios 
       .post("http://localhost:4001/api/user/login", userInfo)
       .then((res) => {
-        console.log(res.data);
+        console.log( "Response form login api",res.data);
         if (res.data) {
           toast.success("Loggedin Successfully");
           document.getElementById("my_modal_3").close();
@@ -70,7 +79,19 @@ function Login() {
             </div>
             {/* password */}
             <div className="mt-4 space-y-2">
-              <span>Password</span>
+              
+              <span>Password</span> 
+              <Link to="/password-reset-request">
+              <span 
+              className="ml-24 underline text-blue-500 cursor-pointer"
+              
+              >Forget Password?</span> 
+              </Link>
+
+
+
+
+            
               <br />
               <input
                 type="password"
@@ -103,6 +124,7 @@ function Login() {
             </div>
           </form>
         </div>
+       
       </dialog>
     </div>
   );

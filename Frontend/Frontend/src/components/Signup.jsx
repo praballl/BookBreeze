@@ -23,11 +23,12 @@ function Signup() {
     await axios
       .post("http://localhost:4001/api/user/signup", userInfo)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         if (res.data) {
-          toast.success("Signup Successfully");
-          navigate(from, { replace: true });
+          toast.success(res.data.message);
+          // navigate(from, { replace: true });
         }
+
         localStorage.setItem("Users", JSON.stringify(res.data.user));
       })
       .catch((err) => {
