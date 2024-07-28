@@ -26,10 +26,10 @@ function Signup() {
         console.log(res);
         if (res.data) {
           toast.success(res.data.message);
-          // navigate(from, { replace: true });
+          navigate(from, { replace: true });
         }
 
-        localStorage.setItem("Users", JSON.stringify(res.data.user));
+        // localStorage.setItem("Users", JSON.stringify(res.data.user));
       })
       .catch((err) => {
         if (err.response) {

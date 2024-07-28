@@ -30,7 +30,14 @@ export const signup = async (req, res) => {
         console.log("user info",user);
         console.log("token info",token);
         console.log("This is url",url);
-        await sendEmail(user.email, "Verify Email for BookBreeze", url);
+        const message = `
+            <h1>Email Verification</h1>
+             <p>Thank you for signing up! Please verify your email address by clicking the button below:</p>
+            <a href="${url}">${url}</a>
+            <p>If you did not create an account, please ignore this email.</p>
+            <p>Thank you,<br>BookBreeze</p>
+        `;
+        await sendEmail(user.email, " BookBreeze", message);
 
 
         res.status(201).json({
@@ -64,7 +71,14 @@ export const login = async (req, res) => {
                 }).save();
 
                 const url = `${process.env.BASE_URL}/user/${user._id}/verify/${token.token}`;
-                await sendEmail(user.email, "Verify Email for BookBreeze", url);
+                const message = `
+            <h1>Email Verification</h1>
+             <p>Trying to log in? Please verify your email address first by clicking the button below:</p>
+            <a href="${url}">${url}</a>
+            <p>If you did not create an account, please ignore this email.</p>
+            <p>Thank you,<br>BookBreeze</p>
+        `;
+        await sendEmail(user.email, " BookBreeze", message);
             }
             return res.status(400).json({
                 message: "An email sent to your account, please verify.",
@@ -132,16 +146,25 @@ export const requestPasswordReset = async (req, res) => {
         if (token) await token.deleteOne();
 
         const resetToken = crypto.randomBytes(32).toString("hex");
-        const hash = await bcryptjs.hash(resetToken, 10);
+        // const hash = await bcryptjs.hash(resetToken, 10);
 
         await new Token({
             userId: user._id,
-            token: hash,
+            token: resetToken,
             createdAt: Date.now()
         }).save();
-        console.log("This is token send for reset password",hash);
-        const resetUrl = `${process.env.BASE_URL}/password-reset/${hash}`;
-        await sendEmail(user.email, "Password Reset Request", `Click the link to reset your password: ${resetUrl}`);
+        console.log("This is token send for reset password",resetToken);
+        const resetUrl = `${process.env.BASE_URL}/password-reset/${resetToken}`;
+
+        const message = `
+            <h1>Password Reset Request for BookBreeze</h1>
+            <p>You requested to reset your password. Please click the link below to reset your password:</p>
+            <a href="${resetUrl}">${resetUrl}</a>
+            <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+            <p>Thank you,<br>BookBreeze</p>
+        `;
+
+        await sendEmail(user.email, "BookBreeze", message);
 
         res.status(200).json({ message: "Password reset link sent to your email." });
     } catch (error) {
