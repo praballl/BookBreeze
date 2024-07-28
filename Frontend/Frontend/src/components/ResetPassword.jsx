@@ -3,10 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import Loading from "./Loading";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -16,6 +18,7 @@ const ResetPassword = () => {
 
     if(password ===repassword ){
     try {
+      setLoading(true)
       await axios.post(url, { password });
       toast.success("Password reset successfully.");
       navigate("/");
@@ -25,6 +28,8 @@ const ResetPassword = () => {
         "Password reset failed: " + error.response?.data?.message ||
           error.message
       );
+    } finally {
+      setLoading(false)
     }
 } else {
     toast.error("Password did not match.")
@@ -32,6 +37,7 @@ const ResetPassword = () => {
   };
 
   return (
+    <>
     <div className="flex flex-col items-center justify-center  bg-slate-100 dark:bg-slate-800 h-screen w-screen">
       <div className="bg-slate-200 dark:bg-slate-700 shadow-md rounded-lg pl-8 pr-8 pt-2 pb-8 mb-4 flex-col gap-2  flex">
           <div className="text-end ">
@@ -79,6 +85,8 @@ const ResetPassword = () => {
         </form>
       </div>
     </div>
+    {loading && <Loading />}
+    </>
   );
 };
 

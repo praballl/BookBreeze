@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import Loading from "./Loading";
 
 
 function Login() {
 
-
+const [loading, setLoading] = useState(false)
  
   const {
     register,
@@ -17,6 +17,7 @@ function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true)
     const userInfo = {
       email: data.email,
       password: data.password,
@@ -43,7 +44,10 @@ function Login() {
           toast.error("Error: " + err.response.data.message);
           setTimeout(() => {}, 2000);
         }
-      });
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
   };
   return (
     <div>
@@ -126,6 +130,7 @@ function Login() {
         </div>
        
       </dialog>
+      {loading && <Loading />}
     </div>
   );
 }

@@ -1,11 +1,16 @@
-import React from "react";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Login from "./Login";
+import Loading from './Loading'
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useState } from "react";
+
+
 function Signup() {
   const location = useLocation();
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const {
@@ -15,6 +20,7 @@ function Signup() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true)
     const userInfo = {
       fullname: data.fullname,
       email: data.email,
@@ -36,6 +42,8 @@ function Signup() {
           console.log(err);
           toast.error("Error: " + err.response.data.message);
         }
+      }).finally(()=>{
+        setLoading(false)
       });
   };
   return (
@@ -126,6 +134,7 @@ function Signup() {
           </div>
         </div>
       </div>
+      {loading && <Loading />}
     </>
   );
 }
