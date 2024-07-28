@@ -24,16 +24,14 @@ export default function ContactMe() {
     e.preventDefault();
     console.log(formData);
 
-    // SERVICE ID - service_qs0st3n
-    // TEMPLATE ID - template_gexryql
-    // PUBLIC KEY - RLTgfh3sVmNCudLqa
+    
     const updatedFormData = { ...formData, from_name: formData.email };
     emailjs
       .send(
-        "service_qs0st3n", // replace with your service ID
-        "template_gexryql", // replace with your template ID
+        import.meta.env.VITE_SERVICE_ID, // replace with your service ID
+        import.meta.env.VITE_TEMPLATE_ID, // replace with your template ID
         updatedFormData,
-        "RLTgfh3sVmNCudLqa" // replace with your user ID (public key)
+        import.meta.env.VITE_PUBLIC_KEY // replace with your user ID (public key)
       )
       .then(
         (result) => {

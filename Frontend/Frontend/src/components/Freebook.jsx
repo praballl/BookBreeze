@@ -8,10 +8,11 @@ import axios from "axios";
 
 import Cards from "./Cards";
 function Freebook() {
+  const rootUrl = import.meta.env.VITE_API_URL
   const [book,setBook] = useState([])
   const getBook = async () => {
     try {
-      const res = await axios.get("http://localhost:4001/api/books");
+      const res = await axios.get(`${rootUrl}/api/books`);
 
       console.log(res.data);
       const data = res.data.filter((data) => data.free);

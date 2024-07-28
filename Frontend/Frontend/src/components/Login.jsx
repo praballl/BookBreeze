@@ -5,11 +5,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Loading from "./Loading";
 
-
 function Login() {
+  const [loading, setLoading] = useState(false);
+  const rootUrl = import.meta.env.VITE_API_URL;
 
-const [loading, setLoading] = useState(false)
- 
   const {
     register,
     handleSubmit,
@@ -17,7 +16,7 @@ const [loading, setLoading] = useState(false)
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoading(true)
+    setLoading(true);
     const userInfo = {
       email: data.email,
       password: data.password,
@@ -25,10 +24,10 @@ const [loading, setLoading] = useState(false)
     // console.log("user email",userInfo.email);
     // console.log("user password",userInfo.password);
 
-    await axios 
-      .post("http://localhost:4001/api/user/login", userInfo)
+    await axios
+      .post(`${rootUrl}/api/user/login`, userInfo)
       .then((res) => {
-        console.log( "Response form login api",res.data);
+        console.log("Response form login api", res.data);
         if (res.data) {
           toast.success("Loggedin Successfully");
           document.getElementById("my_modal_3").close();
@@ -45,9 +44,9 @@ const [loading, setLoading] = useState(false)
           setTimeout(() => {}, 2000);
         }
       })
-      .finally(()=>{
-        setLoading(false)
-      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <div>
@@ -83,19 +82,13 @@ const [loading, setLoading] = useState(false)
             </div>
             {/* password */}
             <div className="mt-4 space-y-2">
-              
-              <span>Password</span> 
+              <span>Password</span>
               <Link to="/password-reset-request">
-              <span 
-              className="ml-24 underline text-blue-500 cursor-pointer"
-              
-              >Forget Password?</span> 
+                <span className="ml-24 underline text-blue-500 cursor-pointer">
+                  Forget Password?
+                </span>
               </Link>
 
-
-
-
-            
               <br />
               <input
                 type="password"
@@ -128,7 +121,6 @@ const [loading, setLoading] = useState(false)
             </div>
           </form>
         </div>
-       
       </dialog>
       {loading && <Loading />}
     </div>

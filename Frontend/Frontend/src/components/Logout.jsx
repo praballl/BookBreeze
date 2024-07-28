@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import toast from "react-hot-toast";
 import Loading from "./Loading";

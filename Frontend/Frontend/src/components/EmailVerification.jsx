@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import verifiedLogo from '../assets/verifiedLogo.png'
 
 function EmailVerification() {
+  const rootUrl = import.meta.env.VITE_API_URL
   const params = useParams();
   const [apiRes, setApiRes] = useState("")
   const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ function EmailVerification() {
       try {
         console.log("this is params",params)
 
-        const url = `http://localhost:4001/api/user/${params.id}/verify/${params.token}`;
+        const url = `${rootUrl}/api/user/${params.id}/verify/${params.token}`;
         console.log("This is url",url)
         const response = await axios.get(url);
         console.log(response);

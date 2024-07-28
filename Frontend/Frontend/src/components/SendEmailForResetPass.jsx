@@ -6,6 +6,7 @@ import Loading from './Loading';
 
 
 const SendEmailForResetPass = () => {
+  let rootUrl =  import.meta.env.VITE_API_URL
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
@@ -13,9 +14,10 @@ const SendEmailForResetPass = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(rootUrl);
       setLoading(true)
       
-      const response = await axios.post(`http://localhost:4001/api/user/password-reset-request`, { email });
+      const response = await axios.post(`${rootUrl}/api/user/password-reset-request`, { email });
     //   console.log("emaillll",response);
       if (response.status == 200){
         navigate(-1)

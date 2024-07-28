@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,10 +11,10 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
-
+  let rootUrl =  import.meta.env.VITE_API_URL
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let url = `http://localhost:4001/api/user/password-reset/${params.token}`;
+    let url = `${rootUrl}/api/user/password-reset/${params.token}`;
 
     if(password ===repassword ){
     try {

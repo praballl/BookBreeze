@@ -60,7 +60,7 @@ function Footer() {
           </div>
         </nav>
         <aside>
-          <p className="text-slate-800 dark:text-slate-300">Copyright © 2024 - All right reserved by Prabal</p>
+          <p className="text-slate-800 dark:text-slate-300">Copyright © 2024 - All right reserved by BookBreeze</p>
         </aside>
       </footer>
     </div>

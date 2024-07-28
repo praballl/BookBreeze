@@ -9,6 +9,7 @@ import { useState } from "react";
 
 
 function Signup() {
+  let rootUrl =  import.meta.env.VITE_API_URL
   const location = useLocation();
   const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function Signup() {
       password: data.password,
     };
     await axios
-      .post("http://localhost:4001/api/user/signup", userInfo)
+      .post(`${rootUrl}/api/user/signup`, userInfo)
       .then((res) => {
         console.log(res);
         if (res.data) {
