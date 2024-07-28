@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
             token: cryptoToken
         }).save();
 
-        const url = `${process.env.BASE_URL}user/${user._id}/verify/${token.token}`;
+        const url = `${process.env.BASE_URL}/user/${user._id}/verify/${token.token}`;
         console.log("user info",user);
         console.log("token info",token);
         console.log("This is url",url);
@@ -63,7 +63,7 @@ export const login = async (req, res) => {
                     token: cryptoToken
                 }).save();
 
-                const url = `${process.env.BASE_URL}user/${user._id}/verify/${token.token}`;
+                const url = `${process.env.BASE_URL}/user/${user._id}/verify/${token.token}`;
                 await sendEmail(user.email, "Verify Email for BookBreeze", url);
             }
             return res.status(400).json({
@@ -139,11 +139,32 @@ export const requestPasswordReset = async (req, res) => {
             token: hash,
             createdAt: Date.now()
         }).save();
-
-        const resetUrl = `${process.env.BASE_URL}/password-reset/${resetToken}`;
+        console.log("This is token send for reset password",hash);
+        const resetUrl = `${process.env.BASE_URL}/password-reset/${hash}`;
         await sendEmail(user.email, "Password Reset Request", `Click the link to reset your password: ${resetUrl}`);
 
         res.status(200).json({ message: "Password reset link sent to your email." });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error });
+    }
+};
+
+export const resetPassword = async (req, res) => {
+    try {
+        const { password } = req.body;
+        const { token } = req.params;
+        console.log("This is params token",token);
+        const tokenDoc = await Token.findOne({ token });
+        if (!tokenDoc) return res.status(400).json({ message: "Invalid or expired password reset token." });
+
+        const user = await User.findById(tokenDoc.userId);
+        if (!user) return res.status(400).json({ message: "User not found." });
+
+        user.password = await bcryptjs.hash(password, 10);
+        await user.save();
+        await tokenDoc.deleteOne();
+
+        res.status(200).json({ message: "Password reset successfully." });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error });
     }
