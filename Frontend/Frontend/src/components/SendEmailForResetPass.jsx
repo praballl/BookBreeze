@@ -2,28 +2,35 @@ import {useState} from 'react'
 import axios from 'axios';
 import { Link,useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-
+import Loading from './Loading';
 
 
 const SendEmailForResetPass = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     // console.log(apiUrl);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
+      
       const response = await axios.post(`http://localhost:4001/api/user/password-reset-request`, { email });
     //   console.log("emaillll",response);
       if (response.status == 200){
         navigate(-1)
+        
       }
       toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response.data.message);
       console.error(error.response.data.message);
+    } finally {
+      setLoading(false)
     }
   };
   return (
+    <>
     <div className='flex flex-col items-center justify-center  bg-slate-100 dark:bg-slate-800 h-screen w-screen'>
         <Toaster />
         <div className="bg-slate-200 dark:bg-slate-700 shadow-md rounded-lg pl-8 pr-8 pt-2 pb-8 mb-4 flex-col gap-2  flex">
@@ -63,6 +70,8 @@ const SendEmailForResetPass = () => {
       </form>
       </div>
     </div>
+      {loading &&<Loading /> }
+    </>
   )
 }
 
