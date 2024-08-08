@@ -84,7 +84,7 @@ function Login() {
             <div className="mt-4 space-y-2">
               <span>Password</span>
               <Link to="/password-reset-request">
-                <span className="ml-24 underline text-blue-500 cursor-pointer">
+                <span className="  ml-20 md:ml-24   underline text-blue-500 cursor-pointer">
                   Forget Password?
                 </span>
               </Link>

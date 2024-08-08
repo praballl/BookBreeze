@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function ContactMe() {
   const [formData, setFormData] = useState({
     from_name: "",
-    to_name: "Prabal Namdeo",
+    to_name: import.meta.env.TO_NAME,
     email: "",
     message: "",
   });
