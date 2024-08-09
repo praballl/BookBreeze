@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
 // Configure CORS
-const allowedOrigins = [process.env.BASE_URL];
+const allowedOrigins = ["https://bookbeeeze.netlify.app"];
 app.use(cors({
   origin: allowedOrigins,
   optionsSuccessStatus: 200
