@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
             token: cryptoToken
         }).save();
 
-        const url = `${process.env.BASE_URL}/user/${user._id}/verify/${token.token}`;
+        const url = `https://book-breeze.netlify.app/user/${user._id}/verify/${token.token}`;
         console.log("user info",user);
         console.log("token info",token);
         console.log("This is url",url);
@@ -70,7 +70,7 @@ export const login = async (req, res) => {
                     token: cryptoToken
                 }).save();
 
-                const url = `${process.env.BASE_URL}/user/${user._id}/verify/${token.token}`;
+                const url = `https://book-breeze.netlify.app/user/${user._id}/verify/${token.token}`;
                 const message = `
             <h1>Email Verification</h1>
              <p>Trying to log in? Please verify your email address first by clicking the button below:</p>
@@ -154,7 +154,7 @@ export const requestPasswordReset = async (req, res) => {
             createdAt: Date.now()
         }).save();
         console.log("This is token send for reset password",resetToken);
-        const resetUrl = `${process.env.BASE_URL}/password-reset/${resetToken}`;
+        const resetUrl = `https://book-breeze.netlify.app/password-reset/${resetToken}`;
 
         const message = `
             <h1>Password Reset Request for BookBreeze</h1>
